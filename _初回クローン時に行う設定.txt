@@ -1,0 +1,5 @@
+﻿初めてリポジトリをクローンした時は、以下のコマンドを実行して初期設定を行ってください。
+
+git config core.autocrlf false
+git config diff.sjis.textconv './_GitTools/ToUtf8.exe'
+git config --list
