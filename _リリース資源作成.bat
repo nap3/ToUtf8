@@ -10,21 +10,27 @@ md %stagingDir%
 
 @rem パッケージ化するモジュールを収集
 copy "ToUtf8\bin\Release\ToUtf8.exe"         %stagingDir%  || call :func_show_error "ToUtf8.exe"
-copy "README.md"        %stagingDir%  || call :func_show_error "README.md"
-copy "LICENSE"          %stagingDir%  || call :func_show_error "LICENSE"
+copy "README.md"        %stagingDir%ToUtf8_README.md  || call :func_show_error "README.md"
+copy "LICENSE"          %stagingDir%ToUtf8_LICENSE    || call :func_show_error "LICENSE"
 
 
 
 
 @rem パッケージ化処理
-_GitTools\packageProduct.exe %stagingDir%ToUtf8.exe
+_GitTools\packageProduct.exe %stagingDir%ToUtf8.exe  || call :func_show_error "ToUtf8.exe"
 
 rmdir /S /Q %stagingDir%
 
 @rem 終了処理
 @echo.
 @echo ***************************************************************
-@echo すべての処理が完了しました。
+@echo  すべての処理が完了しました。
+@echo.
+@echo  バージョンは正しいですか？（zipのファイル名で確認できます。）
+@echo.
+@echo  リリース手順
+@echo    release/x.xのタグを作成する。
+@echo    リリースタイトルをx.xとして、ZipファイルをUploadする。
 @echo ***************************************************************
 Timeout /t 10
 exit
@@ -38,7 +44,7 @@ exit
 @rem %~1のようにチルダをつけるとダブルクオートが削られる。
 @echo.
 @echo ***************************************************************
-@echo   %~1 のコピー処理に失敗しました。
+@echo   %~1 の処理に失敗しました。
 @echo   リリース資源の作成処理を終了します。
 @echo ***************************************************************
 @pause
